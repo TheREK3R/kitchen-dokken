@@ -177,6 +177,21 @@ VOLUME /opt/verifier
       coerce_exposed_ports(config[:ports])
     end
 
+    def network_settings
+      if self[:ipv6]
+        {
+          "EnableIPv6" => true,
+          "IPAM" => {
+            "Config" => [{
+              "Subnet" => "2001:db8:1::/64"
+            }]
+          }
+        }
+      else
+        {}
+      end
+    end
+
     def port_bindings
       coerce_port_bindings(config[:ports])
     end
